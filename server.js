@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 // TODO users to data.js
 let users = [
   {
-    //TODO id
+    id: '123',
     firstName: 'Pavel',
     secondName: 'Efimov',
     email: 'test@gmail.com'
@@ -26,7 +26,7 @@ app.get('/users', (req, res) => {
   res.send(users);
 });
 
-app.post('/user', (req, res) => {
+app.put('/user', (req, res) => {
   users.push(req.body);
 
   res.sendStatus(200);
@@ -34,6 +34,23 @@ app.post('/user', (req, res) => {
 
 app.delete('/user', (req, res) => {
   // TODO make something
+  //console.log('asasdasdadDELIT', req.query);
+  users = users.filter(elem => elem.firstName !== req.query.firstName);
+  //console.log('asasdasdadDELIThhhhh', users);
+  res.sendStatus(200);
+});
+
+app.post('/user', (req, res) => {
+  //console.log('qwqwqwe', req.body);
+  //users = users.filter(elem => elem.id === req.query.id);
+  users = users.map(function(elem) {
+    if (elem.id === req.body.id) {
+      return (elem = req.body);
+    } else {
+      return elem;
+    }
+  });
+  console.log('asasdasdadDELIThhhhh', users);
   res.sendStatus(200);
 });
 

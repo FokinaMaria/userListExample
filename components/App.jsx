@@ -9,13 +9,21 @@ import { showError } from 'utils';
 
 class App extends Component {
   state = {
-    users: []
+    users: [],
+    editlist: [],
+    editElem: 0,
+    showModal: false
   };
 
   updateUsersList = () => {
+    console.log('assad');
     getUsers()
-      .then(({ data }) => this.setState({ users: data }))
+      .then(({ data }) => this.setState({ users: data, editElem: 0, showModal: false }))
       .catch(showError);
+  };
+
+  editUser = (id, item) => {
+    this.setState({ editElem: id, editlist: item, showModal: true });
   };
 
   deleteUser = firstName => () => {
@@ -33,13 +41,18 @@ class App extends Component {
   }
 
   render() {
-    const { updateUsersList, deleteUser } = this;
-    const { users } = this.state;
+    const { updateUsersList, deleteUser, editUser } = this;
+    const { users, editElem, editlist, showModal } = this.state;
 
     return (
       <div>
-        <UsersList data={users} deleteUser={deleteUser} />
-        <Form updateUsersList={updateUsersList} />
+        <UsersList data={users} deleteUser={deleteUser} editUser={editUser} />
+        <Form
+          updateUsersList={updateUsersList}
+          editlist={editlist}
+          editElem={editElem}
+          showModal={showModal}
+        />
       </div>
     );
   }

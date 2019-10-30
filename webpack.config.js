@@ -8,7 +8,7 @@ module.exports = {
     filename: 'bundle.js'
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.css'],
     alias: {
       source: join(__dirname, 'sources'),
       utils: join(__dirname, 'utils')
@@ -20,9 +20,14 @@ module.exports = {
         test: /\.(js|jsx)?$/,
         exclude: /(node_modules)/,
         use: 'babel-loader'
+      },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader']
       }
     ]
   },
+
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Test application',
